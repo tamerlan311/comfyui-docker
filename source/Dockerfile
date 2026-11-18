@@ -21,9 +21,7 @@ RUN apt-get update --assume-yes && \
     rm -rf /var/cache/apt/archives /var/lib/apt/lists/*
 
 # Clones the ComfyUI repository and checks out the latest release
-RUN git clone https://github.com/Comfy-Org/ComfyUI.git /opt/comfyui && \
-    cd /opt/comfyui && \
-    git checkout "v${COMFYUI_VERSION}"
+RUN git clone --depth 1 --branch "v${COMFYUI_VERSION}" https://github.com/Comfy-Org/ComfyUI.git /opt/comfyui
 
 # Clones the ComfyUI Manager repository and checks out the latest release; ComfyUI Manager is an extension for ComfyUI that enables users to install
 # custom nodes and download models directly from the ComfyUI interface; instead of installing it to "/opt/comfyui/custom_nodes/ComfyUI-Manager", which
@@ -31,9 +29,7 @@ RUN git clone https://github.com/Comfy-Org/ComfyUI.git /opt/comfyui && \
 # location upon startup; the reason for this is that the ComfyUI Manager must be installed in the same directory that it installs custom nodes to, but
 # this directory is mounted as a volume, so that the custom nodes are not installed inside of the container and are not lost when the container is
 # removed; this way, the custom nodes are installed on the host machine
-RUN git clone https://github.com/Comfy-Org/ComfyUI-Manager.git /opt/comfyui-manager && \
-    cd /opt/comfyui-manager && \
-    git checkout ${COMFYUI_MANAGER_VERSION}
+RUN git clone --depth 1 --branch ${COMFYUI_MANAGER_VERSION} https://github.com/Comfy-Org/ComfyUI-Manager.git /opt/comfyui-manager
 
 # Installs the required Python packages for both ComfyUI and the ComfyUI Manager
 RUN pip install \
