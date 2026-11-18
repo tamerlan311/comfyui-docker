@@ -32,7 +32,7 @@ RUN git clone --depth 1 --branch "v${COMFYUI_VERSION}" https://github.com/Comfy-
 RUN git clone --depth 1 --branch ${COMFYUI_MANAGER_VERSION} https://github.com/Comfy-Org/ComfyUI-Manager.git /opt/comfyui-manager
 
 # Installs the required Python packages for both ComfyUI and the ComfyUI Manager
-RUN pip install \
+RUN pip install --break-system-packages \
     --requirement /opt/comfyui/requirements.txt \
     --requirement /opt/comfyui-manager/requirements.txt
 
